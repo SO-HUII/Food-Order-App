@@ -8,11 +8,30 @@ const defaultCartState = {
 
 const cartReducer = (state, action) =>{
     if(action.type === 'ADD') {
-        const updatedItems = state.items.concat(action.item);
-        const newTotalAmount = state.totalAmount + action.item.price * action.item.amount;
+        const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount;
+        
+        // 장바구니에 이미 해당 Item이 들어있는지 확인.
+        const existingCartItemIndex = state.items.findIndex(
+            (item) => item.id === action.item.id
+        );
+        const existingCartItem = state.items[existingCartItemIndex];
+
+        let updatedItems;
+
+        if(existingCartItem) {
+            const updatedItem = {
+                ...existingCartItem,
+                amount: existingCartItem.amount + action.item.amount
+            };
+            updatedItems = [...state.items];
+            updatedItems[existingCartItemIndex] = updatedItem;
+        } else {
+            updatedItems = state.items.concat(action.item);
+        }
+
         return {
             items: updatedItems,
-            totalAmount: newTotalAmount
+            totalAmount: updatedTotalAmount
         }
     }
     return defaultCartState;
