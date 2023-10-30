@@ -12,11 +12,11 @@ const Cart = (props) => {
 
     // 장바구니에서 항목 삭제 or 추가
     const cartItemRemoveHandler = id => {
-
+        cartCtx.removeItem(id);
     };
 
     const cartItemAddHandler = item => {
-        
+        cartCtx.addItem({...item, amount: 1});
     };
 
     const cartItems = (
