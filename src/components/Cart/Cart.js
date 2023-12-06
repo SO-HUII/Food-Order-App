@@ -38,6 +38,9 @@ const Cart = (props) => {
         });
         setIsSubmitting(false);
         setDidSubmit(true);
+
+        // 제출 후 카트 비우기
+        cartCtx.clearCart();
     };
 
     const cartItems = (
